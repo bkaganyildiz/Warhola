@@ -11,11 +11,12 @@ import GoogleMaps
 import MapKit
 import CoreLocation
 
-class FirstViewController: UIViewController, MKMapViewDelegate , CLLocationManagerDelegate{
+class FirstViewController: UIViewController,GMSMapViewDelegate , MKMapViewDelegate , CLLocationManagerDelegate{
     let locationManager = CLLocationManager()
     override func loadView() {
         let camera = GMSCameraPosition.camera(withLatitude: 39.892314, longitude: 32.779478, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        mapView.delegate = self
         view =  mapView
         mapView.isIndoorEnabled = true
         mapView.isMyLocationEnabled = true

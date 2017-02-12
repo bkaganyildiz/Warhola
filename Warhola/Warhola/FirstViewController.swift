@@ -9,19 +9,33 @@
 import UIKit
 import GoogleMaps
 import MapKit
+import CoreLocation
 
-class FirstViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-
-    override func viewDidLoad() {
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+class FirstViewController: UIViewController, MKMapViewDelegate , CLLocationManagerDelegate{
+    let locationManager = CLLocationManager()
+    override func loadView() {
+        let camera = GMSCameraPosition.camera(withLatitude: 39.892314, longitude: 32.779478, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view =  mapView
+        mapView.isIndoorEnabled = true
+        mapView.isMyLocationEnabled = true
+        if let userLocation = mapView.myLocation {
+            print("User is located at \(userLocation)")
+        }
+        else {
+            print("Can not find users location")
+        }
         
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Ankara"
-        marker.snippet = "Turkey"
-        marker.map = mapView
+    }
+    override func viewDidLoad() {
+        
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        
+        
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
